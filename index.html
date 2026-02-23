@@ -1,0 +1,1031 @@
+ <!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Green AgroTech – Blog & Actualités (Version Cabinet Expert)</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+
+  <!-- Chart.js -->
+  <script defer src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+  .pdg-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.pdg-gallery img {
+  width: 100%;
+  border-radius: 12px;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+}
+  
+    body {
+      font-family: Inter, Arial, sans-serif;
+      background: #f5f7fa;
+      margin: 0;
+      color: #0f172a;
+    }
+
+/* Slider principal sur la page */
+.slider img.main-slider {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+}
+
+.slider img.active {
+  opacity: 1;
+}
+
+.slider {
+  width: 80%;
+  max-width: 800px;
+  height: 400px;
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  margin: 30px auto;
+}
+
+/* Image arrière floutée */
+.slider::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url("https://i.postimg.cc/G3ZdZs2d/CEO.jpg") center/cover no-repeat;
+  filter: blur(20px);
+  transform: scale(1.2);
+}
+
+/* Slider dans le modal */
+.modal .slider img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+  z-index: 2;
+}
+
+.slider img.active {
+  opacity: 1;
+}
+
+header h1 {
+  font-size: 3.5rem;
+  font-weight: 800;
+  letter-spacing: -1px;
+  margin-bottom: 15px;
+}
+
+header p {
+  font-size: 1.3rem;
+  max-width: 850px;
+  margin: auto;
+  opacity: 0.95;
+}
+
+
+
+
+    /* Blog Grid */
+    .blog-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 25px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+      overflow: hidden;
+      transition: transform .3s ease;
+    }
+
+    .card:hover { transform: translateY(-8px); }
+
+    .card img { width: 100%; height: 200px; object-fit: cover; }
+
+    .card-content { padding: 20px; }
+
+    .tag {
+      background: #e6f4ef;
+      color: #1f7a63;
+      padding: 4px 10px;
+      border-radius: 50px;
+      font-size: 0.75rem;
+      display: inline-block;
+      margin-bottom: 10px;
+    }
+
+    .card h3 { margin: 10px 0; }
+
+    .read-btn {
+      display: inline-block;
+      margin-top: 15px;
+      color: #1f7a63;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    /* Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.7);
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+
+    .modal-content {
+      background: white;
+      width: 90%;
+      max-width: 900px;
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: 30px;
+      border-radius: 12px;
+      position: relative;
+    }
+
+.modal-content h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: #0f172a;
+}
+
+.modal-content p {
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: #334155;
+  margin-bottom: 16px;
+}
+
+.modal-content h1 {
+  text-align: center;
+  font-size: 2.2rem;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  margin-bottom: 25px;
+}
+
+.modal.show {
+  display: flex;
+}
+
+
+    .close-btn {
+      position: absolute;
+      top: 10px; right: 15px;
+      font-size: 22px;
+      cursor: pointer;
+      color: #555;
+    }
+
+    /* Dashboard */
+    .dashboard {
+      background: white;
+      padding: 30px;
+      border-radius: 16px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+      margin-top: 60px;
+    }
+
+    footer {
+      background: #0f3d2e;
+      color: white;
+      text-align: center;
+      padding: 30px 20px;
+      margin-top: 60px;
+    }
+
+     .newsletter {
+      background: linear-gradient(135deg, var(--secondary), var(--primary));
+      padding: 60px 10%;
+      color: #1f7a63;
+      margin-top: 80px;
+      border-radius: 30px;
+    }
+
+    .newsletter h2 {
+      font-size: 2rem;
+      margin-bottom: 10px;
+    }
+
+    .newsletter form {
+      margin-top: 20px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .newsletter input {
+      padding: 12px 15px;
+      border-radius: 30px;
+      border: none;
+      flex: 1;
+      min-width: 250px;
+    }
+
+    .newsletter button {
+      padding: 12px 25px;
+      border-radius: 30px;
+      border: none;
+      background: #1f7a63;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+.ceo-signature {
+  width: 100%;
+  max-width: 600px;
+  margin: auto;
+}
+
+#ceoSignatureSVG {
+  width: 100%;
+  height: auto;
+}
+
+.sig-path {
+  fill: none;
+  stroke: black;
+  stroke-width: 4.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 4000;
+  stroke-dashoffset: 4000;
+  animation: drawSignature 6s ease forwards;
+}
+
+.ceo-text {
+  text-align: center;
+  font-family: "Georgia", serif;
+  margin-top: 10px;
+}
+
+#ceoSignatureName {
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.ceoTitle {
+  font-size: 14px;
+  font-style: italic;
+}
+
+.ceoCompany {
+  font-size: 14px;
+  letter-spacing: 1px;
+}
+
+@keyframes drawSignature {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* ===== HERO STYLING PREMIUM ===== */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-family: "Inter", Arial, sans-serif;
+  background: linear-gradient(180deg, #0b0f14, #0f1720);
+  color: #ffffff;
+  overflow: hidden;
+  text-align: center;
+  background: url("https://i.postimg.cc/wjPPw3df/logo.png") center/cover no-repeat;
+  border-bottom-left-radius: 30px;
+  border-bottom-right-radius: 30px;
+}
+
+
+
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url("https://i.postimg.cc/wjPPw3df/logo.png") center/cover no-repeat;
+  filter: blur(6px) brightness(0.7);
+  z-index: 0;
+  transform: scale(1.15);
+}
+
+/* DATA PARTICLES CANVAS */
+#dataParticles {
+  position: absolute;  /* PAS fixed */
+  top: 0;
+  left: 0;
+  width: 100%;         /* largeur de la section HERO */
+  height: 100%;        /* hauteur de la section HERO */
+  background: radial-gradient(circle at left top, #0b0b0b, #000000);
+  z-index: 0;          /* derrière le contenu */
+  opacity: 0.35;       /* ultra discret */
+}
+
+/* HERO CONTENT ABOVE */
+.hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 900px;
+}
+
+/* Badge */
+.badge {
+  display: inline-block;
+  font-size: 0.8rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  background: rgba(255,255,255,0.05);
+  padding: 6px 16px;
+  border-radius: 20px;
+  margin-bottom: 20px;
+  color: #9fb4c8;
+}
+
+/* Title */
+.hero h1 {
+  font-size: 3.8rem;
+  font-weight: 800;
+  letter-spacing: -1px;
+  margin-bottom: 20px;
+}
+
+/* Subtitle */
+.hero p {
+  font-size: 1.2rem;
+  color: #c9d4df;
+  margin-bottom: 30px;
+}
+
+/* Button */
+.hero button {
+  padding: 14px 36px;
+  border-radius: 40px;
+  border: none;
+  background: #1f7a63;
+  color: white;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.hero button:hover {
+  background: #155c49;
+  transform: translateY(-1px);
+}
+
+/* Animation de particules */
+.hero-animation {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2; /* texte toujours au-dessus */
+}
+
+.hero {
+  min-height: 100vh;
+}
+/* ===== PARTICLES TOP LEFT ===== */
+#particleCanvas {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  width: 90px;   /* TRÈS PETIT */
+  height: 90px;
+  opacity: 0.6;  /* plus subtil */
+  z-index: 1;
+  pointer-events: none;
+}
+
+#dataParticles { opacity: 0.7; }
+.hero::before {
+  z-index: 0;
+}
+
+
+/* ===== RESPONSIVE ===== */
+/* Responsive */
+@media (max-width: 768px) {
+  .hero h1 { font-size: 2.6rem; }
+  .hero p { font-size: 1rem; }
+
+}
+
+@media (max-width: 768px) {
+  .hero { padding: 140px 15px 80px; }
+  .hero h1 { font-size: 2.5rem; }
+  .hero p { font-size: 1rem; }
+  .hero button { padding: 14px 30px; font-size: 0.95rem; }
+ }
+
+
+  </style>
+</head>
+<!-- TEMPLATE INVISIBLE POUR TES ARTICLES -->
+<template id="articleTemplate">
+  <div class="slider">
+    <img id="img1">
+    <img id="img2">
+  </div>
+</template>
+
+<body>
+
+<div class="container">
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<header class="hero">
+  
+<!-- Canvas animation : silhouette au champ -->
+<canvas id="dataParticles"></canvas>
+<img id="silhouetteImg" 
+     src="https://i.postimg.cc/DZ7Wyk9G/silhouette.png"
+     crossorigin="anonymous"
+     hidden>
+
+  <div class="hero-content">
+    <span class="badge">Strategic Intelligence Platform</span>
+    <h1>Green AgroTech Global Market Intelligence</h1>
+    <p>Insights stratégiques, data économique et innovation agro-industrielle pour investisseurs et gouvernements.</p>
+    <button>Download Strategic Report</button>
+  </div>
+</header>
+
+
+<script>
+
+// PARTICLES TOP LEFT - TAILLE MOYENNE
+
+  const canvas = document.getElementById("dataParticles");
+  const ctx = canvas.getContext("2d");
+  // code particules ici
+ 
+
+function resize() {
+  canvas.width = window.innerWidth;
+  canvas.height = document.querySelector(".hero").offsetHeight;
+}
+
+resize();
+window.addEventListener("resize", resize);
+
+let particles = [];
+const COUNT = 1000; // très faible densité (corporate)
+
+class Particle {
+  constructor() {
+    this.x = Math.random() * canvas.width;
+    this.y = Math.random() * canvas.height;
+    this.vx = (Math.random() - 0.5) * 5;
+    this.vy = (Math.random() - 0.5) * 5;
+    this.size = Math.random() * 1.2 + 0.15; // très fin
+  }
+
+  draw() {
+    ctx.fillStyle = "rgba(200,220,255,0.9)";
+    ctx.strokeStyle = "rgba(200,220,255,0.15)";
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+    ctx.fill();
+  }
+
+  update() {
+    this.x += this.vx;
+    this.y += this.vy;
+
+    if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+    if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+  }
+}
+
+for (let i = 0; i < COUNT; i++) particles.push(new Particle());
+
+const MAX_DISTANCE = 120;
+
+function connect() {
+  for (let i = 0; i < particles.length; i++) {
+    for (let j = i + 1; j < particles.length; j++) {
+
+      let dx = particles[i].x - particles[j].x;
+      let dy = particles[i].y - particles[j].y;
+      let dist = dx*dx + dy*dy; // ⚡ pas de sqrt
+
+      if (dist < MAX_DISTANCE * MAX_DISTANCE) {
+        ctx.strokeStyle = "rgba(180,200,220,0.05)";
+        ctx.beginPath();
+        ctx.moveTo(particles[i].x, particles[i].y);
+        ctx.lineTo(particles[j].x, particles[j].y);
+        ctx.stroke();
+      }
+    }
+  }
+}
+
+function animate() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  particles.forEach(p => {
+    p.update();
+    p.draw();
+  });
+  connect();
+  requestAnimationFrame(animate);
+}
+animate();
+</script>
+
+  <!-- BLOG SECTION -->
+  <h2>Derniers articles et rapports</h2>
+  <div class="blog-grid" id="blogGrid"></div>
+
+  <!-- DASHBOARD SECTION -->
+  <div class="dashboard">
+    <h2>Dashboard – Marché Agricole Africain</h2>
+    <canvas id="marketChart"></canvas>
+  </div>
+
+</div>
+
+<!-- MODAL -->
+<div class="modal" id="modal">
+  <div class="modal-content">
+    <span class="close-btn" onclick="closeModal()">✖</span>
+    <div id="modalBody"></div>
+  </div>
+</div>
+
+<section class="newsletter">
+  <h2>Recevez nos analyses stratégiques</h2>
+  <p>Inscrivez-vous pour recevoir nos rapports et notes d’experts.</p>
+
+  <form id="newsletterForm" autocomplete="off">
+  <input type="email" id="email" required autocomplete="off">
+  <button type="submit">S'inscrire</button>
+</form>
+
+<script>
+document.getElementById("newsletterForm").addEventListener("submit", function(e){
+  e.preventDefault();
+
+  const email = document.getElementById("email").value;
+  const formData = new FormData();
+  formData.append("email", email);
+
+  fetch("https://script.google.com/macros/s/AKfycbyta3f3RsykoQoArUgGn4hjXp9OuC6-G261s2mSrPkGaBNBU8mM9IASItEJ9qP4Scxw/exec", {
+    method: "POST",
+    body: formData
+  });
+
+  alert("Email envoyé !");
+  document.getElementById("email").value = ""; // 👈 CLEAR
+});
+</script>
+
+<footer>
+ <p class="credit">© 2026 Green AgroTech </p>
+</footer>
+
+<script>
+// ================== ARTICLES DATA ==================
+const articles = [
+{
+  title: "Mot de fin d’année du Président Directeur Général",
+  category: "Direction",
+  tag: "Message du PDG",
+  date: "Décembre 2026",
+  excerpt: "Message stratégique du PDG de Green AgroTech à l’occasion de la fin d’année.",
+  image: "https://i.postimg.cc/G3ZdZs2d/CEO.jpg",
+  content: `
+  <h1>Message du Président Directeur Général – Perspectives stratégiques de fin d’année</h1>
+
+
+ <!-- Slider -->
+ <div class="slider">
+  <img src="https://i.postimg.cc/G3ZdZs2d/CEO.jpg" class="active" alt="Photo CEO 1">
+</div>
+
+
+  <p>Chers partenaires, investisseurs et collaborateurs,</p>
+
+  <p>L’année qui s’achève a été marquée par des défis majeurs mais aussi par des opportunités stratégiques qui renforcent notre ambition : faire de Green AgroTech un acteur de référence dans l’agro-industrie africaine et mondiale.</p>
+
+  <p>Grâce à votre confiance, nous avons accéléré l’innovation, consolidé nos projets et posé les bases d’une croissance durable fondée sur la technologie, l’expertise financière et l’impact social.</p>
+
+  <p>L’année prochaine sera décisive. Nous poursuivrons notre vision : transformer l’agriculture africaine par l’intelligence artificielle, la finance verte et l’ingénierie agro-industrielle.</p>
+
+  <p>Au nom de toute l’équipe Green AgroTech, je vous remercie pour votre engagement et vous souhaite une excellente nouvelle année, pleine de succès, de santé et de prospérité.</p>
+
+<div class="ceo-signature-block" style="max-width:500px; margin:40px auto; text-align:center;">
+<div class="ceo-signature" style="margin:30px 0; text-align:center;">
+  <!-- Signature SVG -->
+  <svg width="350" height="100" viewBox="0 0 350 100" xmlns="http://www.w3.org/2000/svg">
+    <path d="M10 60 
+             C35 10, 85 90, 120 50 
+             C155 10, 200 80, 250 40 
+             C280 15, 320 65, 340 30" 
+          stroke="#1f7a63" stroke-width="2.5" fill="none" 
+          stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+
+  <!-- Nom centré -->
+  <div style="font-family: 'Georgia', serif; font-size: 16px; font-weight:bold; color:#0f172a; margin-top:5px;">
+    Mendome Rachez
+  </div>
+
+  <!-- Titre et entreprise en plus petit, optionnel -->
+  <div style="font-family: 'Georgia', serif; font-size: 13px; color:#555; margin-top:2px;">
+    Président Directeur Général<br>
+    Green AgroTech SA
+  </div>
+</div>
+`
+},
+  {
+    title: "L’agroalimentaire africain à l’ère de l’IA : opportunités et défis",
+    category: "Innovation",
+    tag: "IA & Data",
+    date: "Janvier 2026",
+    excerpt: "Analyse stratégique des applications de l’IA dans l’agriculture africaine.",
+    image: "https://images.unsplash.com/photo-1501004318641-b39e6451bec6",
+    content: `
+      <h1>L’agroalimentaire africain à l’ère de l’IA</h1>
+      <p><strong>Introduction :</strong> L’agroalimentaire en Afrique connaît une transformation majeure grâce à l’intégration de l’intelligence artificielle (IA) dans toutes les étapes de la chaîne de valeur, de la production à la distribution. L’IA permet d’améliorer la productivité, de réduire les pertes post-récolte et de favoriser une agriculture durable, tout en ouvrant de nouvelles perspectives économiques et stratégiques pour les acteurs publics et privés.</p>
+      <h2>1. IA dans la production</h2>
+      <p><strong>Prédiction des rendements :</strong> Les algorithmes de machine learning analysent les données climatiques, la qualité du sol et l’historique des cultures pour prédire les rendements avec une précision de 85 à 90 % selon certaines études menées sur le maïs et le manioc.</p>
+      <p><strong>Optimisation de l’irrigation et fertilisation :</strong> Grâce aux capteurs IoT, l’IA ajuste automatiquement les doses d’eau et d’engrais, réduisant jusqu’à 30 % les coûts et 25 % l’empreinte environnementale.</p>
+      <p><strong>Surveillance des cultures :</strong> Les drones et caméras intelligentes détectent maladies et parasites avant qu’ils ne se propagent, augmentant la sécurité alimentaire et la qualité des récoltes.</p>
+      <p><strong>Exemple concret :</strong><br>Au Gabon, Green AgroTech a mis en place un système de drones connectés à l’IA qui surveille les plantations de cacao et d’hévéa. Les données collectées permettent de planifier des interventions ciblées et d’augmenter la productivité moyenne de 18 % par hectare.</p>
+
+      <h2>2. Transformation & logistique</h2>
+      <p><strong>Contrôle qualité automatisé :</strong> L’IA identifie les produits non conformes, réduit le gaspillage et standardise les produits pour l’export.</p>
+      <p><strong>Optimisation des chaînes logistiques :</strong> Les algorithmes prévoient la demande et planifient les itinéraires, diminuant de 20 % le temps de transport et les pertes post-récolte.</p>
+      <p><strong>Exemple concret :</strong><br>Green AgroTech utilise des capteurs et algorithmes d’IA pour ajuster la température et l’humidité dans les entrepôts, réduisant les pertes de fruits et légumes frais de 15 %.</p>
+
+      <h2>3. Stratégie & pricing</h2>
+      <p><strong>Analyse de marché et pricing :</strong> L’IA aide à prévoir la demande locale et internationale, et propose des prix optimaux pour maximiser le revenu des producteurs.</p>
+      <p><strong>Simulation de scénarios :</strong> Les modèles prédictifs évaluent l’impact de la sécheresse, des maladies ou des changements réglementaires, permettant une planification proactive.</p>
+      <p><strong>Exemple concret :</strong><br>Green AgroTech a développé un dashboard d’analyse stratégique qui combine données climatiques, prix des marchés et tendances d’exportation, facilitant la prise de décision pour les investisseurs et les exploitants agricoles.</p>
+      
+      <h2>4. Données chiffrées et impact</h2>
+      <table>
+      <tr><th>Indicateur</th><th>Avant IA</th><th>Avec IA</th><th>Gain / Amélioration</th></tr>
+      <tr><td>Rendement de maïs (tonnes/ha)</td><td>4,2</td><td>5,0</td><td>+19 %</td></tr>
+      <tr><td>Réduction gaspillage post-récolte</td><td>0 %</td><td>25 %</td><td>25 %</td></tr>
+      <tr><td>Réduction coûts fertilisation</td><td>0 %</td><td>30 %</td><td>30 %</td></tr>
+      <tr><td>Temps transport (heures)</td><td>48</td><td>38</td><td>-20 %</td></tr>
+      </table>
+      <p class="graph-note">Dans le dashboard intégré, on observe l’évolution de la production et la réduction des pertes sur les 3 dernières années grâce à l’IA.</p>
+
+      <h2>5. Défis et recommandations</h2>
+      <p><strong>Défis :</strong> Accès limité aux données, coût initial des technologies, manque de compétences locales.</p>
+      <p><strong>Recommandations :</strong> Développer des partenariats public-privé, former les agriculteurs à l’IA, encourager les financements pour PME et startups agricoles.</p>
+
+
+<img src="https://images.unsplash.com/photo-1501004318641-b39e6451bec6\" alt=\"IA agriculture\" style=\"width:100%;border-radius:12px;margin-top:20px;\">
+      <p><strong>Conclusion :</strong> L’intelligence artificielle est un levier majeur pour la souveraineté alimentaire africaine, elle représente une opportunité stratégique majeure pour l’agroalimentaire africain. En combinant innovation technologique et planification stratégique, Green AgroTech montre la voie vers une agriculture plus productive, durable et compétitive sur les marchés internationaux.</p>
+    `
+  },
+  {
+    title: "Rapport stratégique : Marché agroalimentaire africain 2030",
+    category: "Rapport Cabinet",
+    tag: "Marché & Investissement",
+    date: "Février 2026",
+    excerpt: "Projection macroéconomique du secteur agricole africain à l’horizon 2030.",
+    image: "https://images.unsplash.com/photo-1524592094714-0f0654e20314",
+    content: `
+      <h1>Marché agroalimentaire africain 2030</h1>
+      <p>Le secteur agroalimentaire africain constitue l’un des piliers majeurs de la croissance économique du continent. À l’horizon 2030, la combinaison de la croissance démographique, de l’urbanisation accélérée, de la montée de la classe moyenne et de la digitalisation agricole transformera profondément la chaîne de valeur alimentaire.</p>
+      <p>Les projections macroéconomiques indiquent que la taille du marché agroalimentaire africain pourrait atteindre près de <strong>1 000 milliards USD d’ici 2030</strong>, positionnant l’Afrique comme l’un des pôles mondiaux de croissance agroalimentaire.</p>
+      <ul>
+        <li>Urbanisation rapide</li>
+        <li>Classe moyenne en croissance</li>
+        <li>Digitalisation agricole</li>
+      </ul>
+      <p>Opportunités majeures pour investisseurs et gouvernements.</p>
+
+    
+      <!-- MACRO CONTEXT -->
+<div class="section">
+<h2>1. Contexte Macroéconomique</h2>
+<div class="card grid-2">
+<div>
+<h3>Poids économique du secteur</h3>
+<p>L’agriculture contribue entre 15 % et 35 % du PIB dans plusieurs pays africains et emploie plus de 50 % de la population active. Elle joue un rôle central dans la sécurité alimentaire, l’emploi rural et les exportations.</p>
+</div>
+<div>
+<h3>Dynamique démographique</h3>
+<p>La population africaine devrait dépasser 1,7 milliard d’habitants en 2030, avec une urbanisation croissante. Cette transition stimule la demande pour des produits transformés et des chaînes de distribution modernes.</p>
+</div>
+</div>
+</div>
+
+
+<!-- MARKET PROJECTION -->
+<div class="section">
+<h2>2. Projection du Marché Agroalimentaire</h2>
+<div class="card">
+<p>La demande alimentaire devrait croître de 60 à 70 % d’ici 2030, tirée par la croissance démographique et l’augmentation du revenu par habitant.</p>
+<table>
+<tr>
+<th>Année</th>
+<th>Taille du marché (USD)</th>
+</tr>
+<tr><td>2020</td><td>300 milliards</td></tr>
+<tr><td>2025</td><td>550 milliards</td></tr>
+<tr><td>2030</td><td>1 000 milliards</td></tr>
+</table>
+</div>
+</div>
+
+
+<!-- VALUE CHAIN -->
+<div class="section">
+<h2>3. Transformation de la Chaîne de Valeur</h2>
+<div class="card grid-2">
+<div>
+<h3>Production Agricole</h3>
+<p>La mécanisation, l’agriculture de précision et l’IA permettront des gains de productivité cumulés de 20 à 40 % d’ici 2030.</p>
+</div>
+<div>
+<h3>Transformation & Industrie</h3>
+<p>Le taux de transformation locale pourrait passer de 30 % à plus de 60 %, réduisant fortement la dépendance aux importations alimentaires.</p>
+</div>
+<div>
+<h3>Logistique & Distribution</h3>
+<p>La modernisation des infrastructures pourrait réduire les pertes post-récolte de 30 % à moins de 10 %.</p>
+</div>
+</div>
+</div>
+
+
+<!-- GROWTH DRIVERS -->
+<div class="section">
+<h2>4. Facteurs Clés de Croissance</h2>
+<div class="card">
+<ul>
+<li>Digitalisation agricole et intelligence artificielle (+15 % de productivité)</li>
+<li>Intégration régionale via la ZLECAf</li>
+<li>Investissements estimés à 50–100 milliards USD/an jusqu’en 2030</li>
+</ul>
+</div>
+</div>
+
+
+<!-- RISKS -->
+<div class="section">
+<h2>5. Risques et Défis</h2>
+<div class="card">
+<p>Les principaux risques incluent le changement climatique, l’accès limité au financement, l’insécurité foncière et les infrastructures insuffisantes.</p>
+<div class="highlight">
+<strong>Projection :</strong> Sans adaptation, la production agricole pourrait diminuer de 2 à 3 % d’ici 2030.
+</div>
+</div>
+</div>
+
+
+<!-- SCENARIOS -->
+<div class="section">
+<h2>6. Scénarios Prospectifs 2030</h2>
+<div class="card">
+<table>
+<tr><th>Scénario</th><th>Croissance annuelle</th><th>Description</th></tr>
+<tr><td>Optimiste</td><td>5–6 %</td><td>Transformation digitale accélérée et industrialisation massive</td></tr>
+<tr><td>Intermédiaire</td><td>3–4 %</td><td>Poursuite des tendances actuelles</td></tr>
+<tr><td>Pessimiste</td><td>1–2 %</td><td>Chocs climatiques et instabilité politique</td></tr>
+</table>
+</div>
+</div>
+
+
+<!-- DASHBOARD -->
+<div class="section">
+<h2>Dashboard Macroéconomique</h2>
+<div class="card">
+<canvas id="marketChartModal" height="120"></canvas>
+</div>
+</div>
+
+
+<!-- STRATEGIC IMPLICATIONS -->
+<div class="section">
+<h2>7. Implications Stratégiques pour Green AgroTech</h2>
+<div class="card">
+<p>Green AgroTech peut se positionner comme cabinet stratégique agroalimentaire et plateforme d’intelligence de marché agricole, fournissant des analyses macroéconomiques, des solutions IA et du conseil stratégique aux gouvernements et investisseurs.</p>
+</div>
+</div>
+
+
+<!-- CONCLUSION -->
+<div class="section">
+<h2>Conclusion Générale</h2>
+<div class="card">
+<p>Le marché agroalimentaire africain constitue un mégatrend économique majeur. À l’horizon 2030, il deviendra un moteur clé de croissance, de souveraineté alimentaire et d’attractivité des investissements internationaux.</p>
+</div>
+</div>
+
+
+</div>
+    `
+  }
+];
+
+// ================== RENDER BLOG ==================
+const blogGrid = document.getElementById("blogGrid");
+
+articles.forEach((article, index) => {
+  const card = document.createElement("div");
+  card.className = "card";
+  card.innerHTML = `
+    <img src="${article.image}" alt="${article.title}">
+    <div class="card-content">
+      <span class="tag">${article.tag}</span>
+      <h3>${article.title}</h3>
+      <p>${article.excerpt}</p>
+      <div class="read-btn" data-index="${index}">Lire l’article →</div>
+    </div>
+  `;
+  blogGrid.appendChild(card);
+});
+
+// ================== MODAL FUNCTIONS ==================
+
+function animateSignature() {
+  const path = document.getElementById("signaturePath");
+  if (!path) return;
+
+  const length = path.getTotalLength();
+  path.style.strokeDasharray = length;
+  path.style.strokeDashoffset = length;
+
+  path.getBoundingClientRect(); // force repaint
+
+  path.style.transition = "stroke-dashoffset 6s ease-in-out";
+  path.style.strokeDashoffset = "0";
+}
+
+// Lancer après ouverture modal
+setTimeout(animateSignature, 800);
+
+// DÉFINIR LE SLIDER
+let sliderInterval;
+
+function startSlider() {
+  clearInterval(sliderInterval);
+  let current = 0;
+  const images = document.querySelectorAll("#modalBody .slider img");
+  if (!images.length) return;
+
+  images.forEach(img => img.classList.remove("active"));
+  images[0].classList.add("active");
+
+  sliderInterval = setInterval(() => {
+    images[current].classList.remove("active");
+    current = (current + 1) % images.length;
+    images[current].classList.add("active");
+  }, 3000);
+}
+
+// ENSUITE openModal
+const modal = document.getElementById("modal");
+const modalBody = document.getElementById("modalBody");
+
+function openModal(content) {
+  modalBody.innerHTML = content;
+  modal.classList.add("show");
+  modal.style.display = "flex"; // force affichage si nécessaire
+
+  setTimeout(() => {
+    startSlider();
+    animateSignature();
+  }, 500);
+}
+
+function closeModal() {
+  modal.classList.remove("show");
+  modal.style.display = "none"; // optionnel, peut être retiré si CSS suffit
+}
+
+  // START TYPEWRITER FOR CEO NAME 
+  
+  setTimeout(() => {
+  const ceoNameEl = modalBody.querySelector("#ceoSignatureName");
+
+  if (ceoNameEl) {
+    typeWriter("Mendome Rachez", ceoNameEl, 90);
+
+    const titleEl = modalBody.querySelector("#ceoTitle");
+    const companyEl = modalBody.querySelector("#ceoCompany");
+
+    if (titleEl) titleEl.textContent = titleText;
+    if (companyEl) companyEl.textContent = companyText;
+  }
+
+}, 2000);
+
+
+function closeModal() {
+  document.getElementById("modal").style.display = "none";
+}
+
+document.getElementById("modal").addEventListener("click", e => {
+  if (e.target === document.getElementById("modal")) closeModal();
+});
+// Event delegation for buttons (NO btoa/atob to avoid Unicode errors)
+document.addEventListener("click", e => {
+  if (e.target.classList.contains("read-btn")) {
+    const index = e.target.getAttribute("data-index");
+    openModal(articles[index].content);
+  }
+
+});
+
+// ================== DASHBOARD CHART ==================
+window.addEventListener("load", () => {
+  const ctx = document.getElementById("marketChart").getContext("2d");
+  new Chart(ctx, {
+    type: "line",
+    data: {
+      labels: ["2023", "2024", "2025", "2026", "2027"],
+      datasets: [{
+        label: "Production agricole (Millions de tonnes)",
+        data: [120, 138, 155, 172, 190],
+        borderWidth: 3
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: { display: true }
+      }
+    }
+  });
+});
+</script>
+
+<!-- SCRIPT SLIDER -->
+
+<script>
+
+const nameText = "Mendome Rachez";
+const titleText = "Président Directeur Général & Fondateur";
+const companyText = "Green AgroTech SA";
+
+function startCEOText() {
+  typeWriter(nameText, modalBody.querySelector("#ceoName"), 80);
+
+  setTimeout(() => {
+    modalBody.querySelector("#ceoTitle").textContent = titleText;
+  }, 2000);
+
+  setTimeout(() => {
+    modalBody.querySelector("#ceoCompany").textContent = companyText;
+  }, 2500);
+}
+
+function typeWriter(text, element, speed) {
+  if (!element) return;
+  element.textContent = "";
+  let i = 0;
+
+  function typing() {
+    if (i < text.length) {
+      element.textContent += text.charAt(i);
+      i++;
+      setTimeout(typing, speed);
+    }
+  }
+  typing();
+}
+</script>
+</body>
+</html>
